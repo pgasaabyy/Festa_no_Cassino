@@ -9,12 +9,12 @@ symbols = ["🍒", "🍋", "🔔", "⭐", "🍀", "💎"]
 # Função que limpa a tela do terminal
 def limpar_tela():
     os.system("cls" if os.name == "nt" else "clear")  
-    # "cls" é usado no Windows
+    # "cls" é usado no Windows e clear nos demais SO
 
 # Função principal do jogo
 def slot_machine():
     limpar_tela()  # limpa a tela antes de começar
-    print("🎰 Bem-vindo a Festa no Cassino! 🎰\n")  # mensagem de boas-vindas
+    print("🎰 Bem-vindo à Festa no Cassino! 🎰\n")  # mensagem de boas-vindas
     saldo = 100  # dinheiro inicial
 
     # Loop principal do jogo (vai rodar até o jogador sair ou perder tudo)
@@ -42,25 +42,35 @@ def slot_machine():
 
         # Mostra mensagem de roleta girando
         print("\nGirando...")
-        time.sleep(5)  # espera 5 segundos para dar efeito de suspense
+        time.sleep(2)  # espera 2 segundos para dar efeito de suspense
 
-        # Sorteia 3 símbolos aleatórios da lista
-        resultado = [random.choice(symbols) for _ in range(3)]
+        # Sorteia 5 símbolos aleatórios da lista
+        resultado = [random.choice(symbols) for _ in range(5)]
         print(" | ".join(resultado))  # mostra o resultado
 
         # Verifica condições de vitória
-        if resultado[0] == resultado[1] == resultado[2]:
-            # Se os 3 forem iguais, jogador ganha 5x a aposta
+        if resultado.count(resultado[0]) == 5:
+            # Se os 5 forem iguais → JACKPOT
             ganho = aposta * 10
             saldo += ganho
             print(f"🎉 JACKPOT! Você ganhou ${ganho} 🎉\n")
-        elif resultado[0] == resultado[1] or resultado[1] == resultado[2]:
-            # Se apenas 2 forem iguais, jogador ganha 2x a aposta
+        elif any(resultado.count(s) == 4 for s in resultado):
+            # Se 4 iguais
+            ganho = aposta * 7
+            saldo += ganho
+            print(f"✨ Quase Jackpot! Você ganhou ${ganho}! ✨\n")
+        elif any(resultado.count(s) == 3 for s in resultado):
+            # Se 3 iguais
+            ganho = aposta * 5
+            saldo += ganho
+            print(f"✨ Você ganhou ${ganho}! ✨\n")
+        elif any(resultado.count(s) == 2 for s in resultado):
+            # Se 2 iguais
             ganho = aposta * 2
             saldo += ganho
             print(f"✨ Você ganhou ${ganho}! ✨\n")
         else:
-            # Se nenhum for igual, perde a aposta
+            # Se nenhum for igual
             saldo -= aposta
             print("😢 Você perdeu...\n")
 
@@ -75,4 +85,3 @@ def slot_machine():
 
 # Chama a função principal para iniciar o jogo
 slot_machine()
-
