@@ -51,7 +51,7 @@ def slot_machine():
         # Verifica condições de vitória
         if resultado[0] == resultado[1] == resultado[2]:
             # Se os 3 forem iguais, jogador ganha 5x a aposta
-            ganho = aposta * 5
+            ganho = aposta * 10
             saldo += ganho
             print(f"🎉 JACKPOT! Você ganhou ${ganho} 🎉\n")
         elif resultado[0] == resultado[1] or resultado[1] == resultado[2]:
@@ -75,3 +75,4 @@ def slot_machine():
 
 # Chama a função principal para iniciar o jogo
 slot_machine()
+
