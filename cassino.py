@@ -15,7 +15,7 @@ def limpar_tela():
 def slot_machine():
     limpar_tela()  # limpa a tela antes de começar
     print("🎰 Bem-vindo à Festa no Cassino! 🎰\n")  # mensagem de boas-vindas
-    saldo = 100  # dinheiro inicial
+    saldo = 10  # dinheiro inicial
 
     # Loop principal do jogo (vai rodar até o jogador sair ou perder tudo)
     while True:
@@ -42,35 +42,36 @@ def slot_machine():
 
         # Mostra mensagem de roleta girando
         print("\nGirando...")
-        time.sleep(2)  # espera 2 segundos para dar efeito de suspense
+        time.sleep(5)  # espera 2 segundos para dar efeito de suspense
 
         # Sorteia 5 símbolos aleatórios da lista
         resultado = [random.choice(symbols) for _ in range(5)]
         print(" | ".join(resultado))  # mostra o resultado
 
-        # Verifica condições de vitória
+        # Verifica condições de vitória 
+        
+        # Se os 5 forem iguais → JACKPOT
         if resultado.count(resultado[0]) == 5:
-            # Se os 5 forem iguais → JACKPOT
             ganho = aposta * 10
             saldo += ganho
             print(f"🎉 JACKPOT! Você ganhou ${ganho} 🎉\n")
-        elif any(resultado.count(s) == 4 for s in resultado):
             # Se 4 iguais
-            ganho = aposta * 7
-            saldo += ganho
-            print(f"✨ Quase Jackpot! Você ganhou ${ganho}! ✨\n")
-        elif any(resultado.count(s) == 3 for s in resultado):
-            # Se 3 iguais
+        elif any(resultado.count(s) == 4 for s in resultado):
             ganho = aposta * 5
             saldo += ganho
+            print(f"✨ Quase Jackpot! Você ganhou ${ganho}! ✨\n")
+            # Se 3 iguais
+        elif any(resultado.count(s) == 3 for s in resultado):
+            ganho = aposta * 3
+            saldo += ganho
             print(f"✨ Você ganhou ${ganho}! ✨\n")
+             # Se 2 iguais
         elif any(resultado.count(s) == 2 for s in resultado):
-            # Se 2 iguais
             ganho = aposta * 2
             saldo += ganho
             print(f"✨ Você ganhou ${ganho}! ✨\n")
-        else:
             # Se nenhum for igual
+        else:
             saldo -= aposta
             print("😢 Você perdeu...\n")
 
